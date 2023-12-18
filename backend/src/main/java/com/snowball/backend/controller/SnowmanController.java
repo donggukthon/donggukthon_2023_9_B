@@ -49,7 +49,7 @@ public class SnowmanController {
     }
 
     @GetMapping("/view-snowman")
-    // 눈사람 등록 API
+    // 본인 눈사람 조회 API
     public MyInfoDto.Response getMySnowman(
             @RequestHeader("Authorization") String authorizationHeader) {
 
@@ -79,4 +79,6 @@ public class SnowmanController {
                 200,
                 "Success");
     }
+
+
 }

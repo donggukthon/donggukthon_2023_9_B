@@ -25,6 +25,7 @@ public class SnowmanDto {
     @Getter
     @Setter
     public static class Request {
+        private Long snowman_id;
         private Long category_id;
         private String snowman_name;
         private String gender;
