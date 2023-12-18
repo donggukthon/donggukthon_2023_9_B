@@ -2,9 +2,12 @@ package com.snowball.backend.controller;
 
 import com.snowball.backend.config.jwt.JwtProvider;
 import com.snowball.backend.dto.SnowmanDto;
+import com.snowball.backend.dto.MyInfoDto;
 import com.snowball.backend.entity.Snowman;
+import com.snowball.backend.entity.User;
 import com.snowball.backend.service.SnowmanService;
 
+import com.snowball.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1")
 public class SnowmanController {
     private final SnowmanService snowmanService;
+    private final UserService userService;
     private final JwtProvider jwtProvider;
 
     @PostMapping("/register-snowman")
@@ -46,7 +50,7 @@ public class SnowmanController {
 
     @GetMapping("/view-snowman")
     // 눈사람 등록 API
-    public SnowmanDto.Response getMySnowman(
+    public MyInfoDto.Response getMySnowman(
             @RequestHeader("Authorization") String authorizationHeader) {
 
         // 토큰에서 유저 id 가져오기
@@ -57,10 +61,10 @@ public class SnowmanController {
         Snowman getSnowman = snowmanService.getSnowmanBySnowmanId(userId);
 
         // 사용자 정보 찾아오기
+        User getUser = userService.getUserIdByProviderId(userId.toString());
 
-
-        return new SnowmanDto.Response(
-                new SnowmanDto.Data(
+        return new MyInfoDto.Response(
+                new MyInfoDto.Data(
                         getSnowman.getSnowmanId(),
                         getSnowman.getUserId(),
                         getSnowman.getCategoryId(),
@@ -70,7 +74,8 @@ public class SnowmanController {
                         getSnowman.getIntroduce(),
                         getSnowman.getSnsKind(),
                         getSnowman.getSnsId(),
-                        getSnowman.getIsExpose()),
+                        getSnowman.getIsExpose(),
+                        getUser.getWarmSnow()),
                 200,
                 "Success");
     }
