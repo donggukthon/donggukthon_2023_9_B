@@ -9,7 +9,11 @@ import com.snowball.backend.service.SnowmanService;
 
 import com.snowball.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -91,6 +95,33 @@ public class SnowmanController {
 
         // 다른 사람 눈사람 정보 가져오기
         Snowman getSnowman = snowmanService.getSnowmanBySnowmanId(snowmanId);
+
+        return new SnowmanDto.Response(
+                new SnowmanDto.Data(
+                        getSnowman.getSnowmanId(),
+                        getSnowman.getUserId(),
+                        getSnowman.getCategoryId(),
+                        getSnowman.getSnowmanName(),
+                        getSnowman.getRegisterDate(),
+                        getSnowman.getGender(),
+                        getSnowman.getIntroduce(),
+                        getSnowman.getSnsKind(),
+                        getSnowman.getSnsId(),
+                        getSnowman.getIsExpose()),
+                200,
+                "Success");
+    }
+
+    @GetMapping("/view-snowman/other")
+    // 모든 눈사람 조회 API
+    public ResponseEntity<Map<String, Object>> viewAll(
+            @RequestHeader("Authorization") String authorizationHeader) {
+
+        // 요청된 눈사람 id 가져오기
+        Long snowmanId = request.getSnowman_id();
+
+        // 다른 사람 눈사람 정보 가져오기
+        List<Snowman>  = snowmanService.getSnowmanBySnowmanId(snowmanId);
 
         return new SnowmanDto.Response(
                 new SnowmanDto.Data(
