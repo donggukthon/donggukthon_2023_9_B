@@ -39,6 +39,15 @@ public class SnowmanService {
     //카테고리에 해당하는 모든 눈사람 찾아서 반환
     public List<Snowman> getSnowmanByCategoryID(Long categoryId) { return snowmanRepository.findAllByCategoryId(categoryId); }
 
+    //카테고리에 어울리는 모든 눈사람 찾아서 반환
+    public List<Snowman> getSnowmanByFitCategory(Long categoryId) {
+
+        //fit한 id찾기
+        Long fitId = categoryId;
+
+        return snowmanRepository.findAllByCategoryId(fitId);
+    }
+
     // 새로운 눈사람을 등록
     public Snowman addSnowman(Long userId, SnowmanDto.Request request) {
 
