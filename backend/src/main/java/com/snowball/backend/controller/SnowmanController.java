@@ -121,4 +121,5 @@ public class SnowmanController {
 
         return new SnowmanAllDto.Data(snowmanList);
     }
+
 }

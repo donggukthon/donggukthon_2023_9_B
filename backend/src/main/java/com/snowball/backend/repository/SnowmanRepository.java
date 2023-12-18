@@ -9,5 +9,7 @@ public interface SnowmanRepository extends JpaRepository<Snowman, Long> {
     Snowman findSnowmanBySnowmanId(Long snowmanId);
     Snowman findSnowmanByUserId(Long userId);
 
+    List<Snowman> findAllByCategoryId(Long categoryId);
+
     List<Snowman> findAll();
 }
