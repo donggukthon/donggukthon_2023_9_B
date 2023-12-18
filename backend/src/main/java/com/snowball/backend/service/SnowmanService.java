@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -30,6 +32,9 @@ public class SnowmanService {
     public Snowman getSnowmanByUserId(Long userId) {
         return snowmanRepository.findSnowmanByUserId(userId);
     }
+
+    //모든 눈사람 찾아서 반환
+    public List<Snowman> getSnowmanAll() { return snowmanRepository.findAll(); }
 
     // 새로운 눈사람을 등록
     public Snowman addSnowman(Long userId, SnowmanDto.Request request) {
