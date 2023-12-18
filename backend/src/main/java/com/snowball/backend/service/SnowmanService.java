@@ -3,11 +3,14 @@ package com.snowball.backend.service;
 import com.snowball.backend.dto.SnowmanDto;
 import com.snowball.backend.entity.Snowman;
 import com.snowball.backend.repository.SnowmanRepository;
+import com.snowball.backend.util.FitCategory;
 import com.snowball.backend.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class SnowmanService {
 
     private final SnowmanRepository snowmanRepository;
+    private final FitCategory fitCategory;
 
     // 눈사람 저장 또는 업데이트
     public void save(Snowman snowman) {
@@ -29,6 +33,21 @@ public class SnowmanService {
     // 유저 id로 눈사람을 찾아 반환
     public Snowman getSnowmanByUserId(Long userId) {
         return snowmanRepository.findSnowmanByUserId(userId);
+    }
+
+    //모든 눈사람 찾아서 반환
+    public List<Snowman> getSnowmanAll() { return snowmanRepository.findAll(); }
+
+    //카테고리에 해당하는 모든 눈사람 찾아서 반환
+    public List<Snowman> getSnowmanByCategoryID(Long categoryId) { return snowmanRepository.findAllByCategoryId(categoryId); }
+
+    //카테고리에 어울리는 모든 눈사람 찾아서 반환
+    public List<Snowman> getSnowmanByFitCategory(Long categoryId) {
+
+        //fit한 id찾기
+        Long fitId = fitCategory.getFitCategoryId(categoryId);
+
+        return snowmanRepository.findAllByCategoryId(fitId);
     }
 
     // 새로운 눈사람을 등록
