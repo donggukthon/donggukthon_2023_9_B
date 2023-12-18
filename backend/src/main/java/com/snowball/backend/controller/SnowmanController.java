@@ -43,4 +43,35 @@ public class SnowmanController {
                 201,
                 "created");
     }
+
+    @GetMapping("/view-snowman")
+    // 눈사람 등록 API
+    public SnowmanDto.Response getMySnowman(
+            @RequestHeader("Authorization") String authorizationHeader) {
+
+        // 토큰에서 유저 id 가져오기
+        String jwtToken = jwtProvider.getTokenFromHeader(authorizationHeader);
+        Long userId = jwtProvider.getUserIdFromToken(jwtToken);
+
+        // 사용자의 눈사람 찾아오기
+        Snowman getSnowman = snowmanService.getSnowmanBySnowmanId(userId);
+
+        // 사용자 정보 찾아오기
+
+
+        return new SnowmanDto.Response(
+                new SnowmanDto.Data(
+                        getSnowman.getSnowmanId(),
+                        getSnowman.getUserId(),
+                        getSnowman.getCategoryId(),
+                        getSnowman.getSnowmanName(),
+                        getSnowman.getRegisterDate(),
+                        getSnowman.getGender(),
+                        getSnowman.getIntroduce(),
+                        getSnowman.getSnsKind(),
+                        getSnowman.getSnsId(),
+                        getSnowman.getIsExpose()),
+                200,
+                "Success");
+    }
 }
