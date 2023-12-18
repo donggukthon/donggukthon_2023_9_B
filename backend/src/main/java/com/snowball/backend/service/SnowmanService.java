@@ -3,6 +3,7 @@ package com.snowball.backend.service;
 import com.snowball.backend.dto.SnowmanDto;
 import com.snowball.backend.entity.Snowman;
 import com.snowball.backend.repository.SnowmanRepository;
+import com.snowball.backend.util.FitCategory;
 import com.snowball.backend.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import java.util.List;
 public class SnowmanService {
 
     private final SnowmanRepository snowmanRepository;
+    private final FitCategory fitCategory;
 
     // 눈사람 저장 또는 업데이트
     public void save(Snowman snowman) {
@@ -43,7 +45,7 @@ public class SnowmanService {
     public List<Snowman> getSnowmanByFitCategory(Long categoryId) {
 
         //fit한 id찾기
-        Long fitId = categoryId;
+        Long fitId = fitCategory.getFitCategoryId(categoryId);
 
         return snowmanRepository.findAllByCategoryId(fitId);
     }

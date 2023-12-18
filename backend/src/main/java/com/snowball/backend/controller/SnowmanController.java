@@ -129,7 +129,7 @@ public class SnowmanController {
             @RequestParam("category_id") Long categoryId) {
 
         // 요청된 눈사람 id 가져오기
-        List<Snowman> snowmanList = snowmanService.getSnowmanByCategoryID(categoryId);
+        List<Snowman> snowmanList = snowmanService.getSnowmanByFitCategory(categoryId);
 
         return new SnowmanAllDto.Data(snowmanList);
     }
