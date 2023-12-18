@@ -122,4 +122,15 @@ public class SnowmanController {
         return new SnowmanAllDto.Data(snowmanList);
     }
 
+    @GetMapping("/view-snowman/category")
+    // 카테고리별 눈사람 조회 API
+    public SnowmanAllDto.Data viewCategory(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestParam("category_id") Long categoryId) {
+
+        // 요청된 눈사람 id 가져오기
+        List<Snowman> snowmanList = snowmanService.getSnowmanByCategoryID(categoryId);
+
+        return new SnowmanAllDto.Data(snowmanList);
+    }
 }
