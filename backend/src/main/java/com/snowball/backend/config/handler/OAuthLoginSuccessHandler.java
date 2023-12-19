@@ -6,6 +6,8 @@ import com.snowball.backend.config.jwt.JwtProvider;
 import com.snowball.backend.service.SnowmanService;
 import com.snowball.backend.service.UserService;
 import com.snowball.backend.util.StringUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -13,8 +15,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
@@ -28,10 +28,6 @@ public class OAuthLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     private final JwtProvider jwtProvider;
     private final UserService userService;
     private final SnowmanService snowmanService;
-
-    // 신규 유저 여부, 따듯한 눈 추가 여부
-    Boolean hasSnowman = false;
-    Boolean isPlus = false;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
@@ -55,6 +51,10 @@ public class OAuthLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
         User existUser = userService.getUserIdByProviderId(providerId);
         User user = new User();
+
+        // 신규 유저 여부, 따듯한 눈 추가 여부
+        boolean hasSnowman = false;
+        boolean isPlus = false;
 
         if (existUser == null) {
             // 신규 유저인 경우
