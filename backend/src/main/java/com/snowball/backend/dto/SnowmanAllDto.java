@@ -14,4 +14,12 @@ public class SnowmanAllDto {
     public static class Data {
         private List<Snowman> all_snowman_list;
     }
+
+    @Getter
+    @AllArgsConstructor
+    public static class Response {
+        private SnowmanAllDto.Data data;
+        private int return_code;
+        private String return_message;
+    }
 }
