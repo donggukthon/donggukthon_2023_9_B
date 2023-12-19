@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class CommomError extends RuntimeException{
+public class CustomException extends RuntimeException{
     private final ErrorCode error;
 }
