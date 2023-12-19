@@ -52,7 +52,7 @@ public class SnowmanController {
     }
 
     @PutMapping("/update-snowman")
-    // 눈사람 등록 API
+    // 눈사람 수정 API
     public SnowmanDto.Response putSnowman(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestBody SnowmanDto.Request request) {
@@ -154,6 +154,18 @@ public class SnowmanController {
     @GetMapping("/view-snowman/category")
     // 카테고리별 눈사람 조회 API
     public SnowmanAllDto.Data viewCategory(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestParam("category_id") Long categoryId) {
+
+        // 요청된 눈사람 id 가져오기
+        List<Snowman> snowmanList = snowmanService.getSnowmanByFitCategory(categoryId);
+
+        return new SnowmanAllDto.Data(snowmanList);
+    }
+
+    @GetMapping("/view-snowman/fit")
+    // 어울리는 눈사람 조회 API
+    public SnowmanAllDto.Data viewFit(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestParam("category_id") Long categoryId) {
 
