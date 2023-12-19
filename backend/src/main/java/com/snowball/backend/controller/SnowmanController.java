@@ -10,12 +10,14 @@ import com.snowball.backend.service.SnowmanService;
 
 import com.snowball.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/api/v1")
 public class SnowmanController {
     private final SnowmanService snowmanService;
@@ -93,7 +95,7 @@ public class SnowmanController {
         Snowman getSnowman = snowmanService.getSnowmanBySnowmanId(userId);
 
         // 사용자 정보 찾아오기
-        User getUser = userService.getUserIdByProviderId(userId.toString());
+        User getUser = userService.getUserByUserId(userId);
 
         return new MyInfoDto.Response(
                 new MyInfoDto.Data(

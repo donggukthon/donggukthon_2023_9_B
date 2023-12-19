@@ -5,7 +5,6 @@ import com.snowball.backend.entity.Category;
 import com.snowball.backend.entity.Snowman;
 import com.snowball.backend.repository.CategoryRepository;
 import com.snowball.backend.repository.SnowmanRepository;
-import com.snowball.backend.util.FitCategory;
 import com.snowball.backend.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

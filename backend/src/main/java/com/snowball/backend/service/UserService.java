@@ -24,4 +24,9 @@ public class UserService extends DefaultOAuth2UserService {
     public User getUserIdByProviderId(String providerId) {
         return userRepository.findUserByProviderId(providerId);
     }
+
+    // 제공자 id로 유저를 찾아 반환
+    public User getUserByUserId(Long UserId) {
+        return userRepository.findUserByUserId(UserId);
+    }
 }
