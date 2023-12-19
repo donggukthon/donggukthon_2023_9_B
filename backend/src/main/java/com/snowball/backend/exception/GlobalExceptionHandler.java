@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.snowball.backend.exception.ErrorCode.INTERNAL_SERVER_ERROR;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -15,14 +13,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(
                 new ExceptionDto(
                         ex.getError().getErrorCode(),
-                        ex.getError().getHttpStatus(),
                         ex.getError().getMessage()
-                ).getHttpStatus()
+                ),
+                ex.getError().getHttpStatus()
         );
     }
 
-    @ExceptionHandler({ Exception.class })
+    @ExceptionHandler({ CustomException.class })
     protected ResponseEntity handleServerException(Exception ex) {
-        return new ResponseEntity(new ErrorDto(INTERNAL_SERVER_ERROR.getStatus(), INTERNAL_SERVER_ERROR.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(new ExceptionDto(ErrorCode.INTERNAL_SERVER_ERROR.getErrorCode(), ErrorCode.INTERNAL_SERVER_ERROR.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }
