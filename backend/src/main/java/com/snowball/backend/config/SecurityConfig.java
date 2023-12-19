@@ -4,26 +4,26 @@ import com.snowball.backend.config.handler.OAuthLoginFailureHandler;
 import com.snowball.backend.config.handler.OAuthLoginSuccessHandler;
 import com.snowball.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
 
 @Configuration
-@EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
+
     private final UserService userService;
     private final OAuthLoginSuccessHandler oAuthLoginSuccessHandler;
     private final OAuthLoginFailureHandler oAuthLoginFailureHandler;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // cors 관련 설정
                 .cors().configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowCredentials(true);
@@ -36,17 +36,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login/**").permitAll()
-                .antMatchers("/test-result/**").permitAll()
-                .antMatchers("/api/v1/**").permitAll()
+                .dispatcherTypeMatchers(HttpMethod.valueOf("/login/**")).permitAll()
+                .dispatcherTypeMatchers(HttpMethod.valueOf("/test-result/**")).permitAll()
+                .dispatcherTypeMatchers(HttpMethod.valueOf("/api/v1/**")).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                // OAuth 로그인 관련 설정
                 .oauth2Login()
                 .userInfoEndpoint()
                 .userService(userService)
                 .and()
                 .successHandler(oAuthLoginSuccessHandler)
                 .failureHandler(oAuthLoginFailureHandler);
+
+        return http.build();
     }
 }
