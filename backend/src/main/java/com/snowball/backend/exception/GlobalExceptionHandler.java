@@ -19,9 +19,14 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler({ CustomException.class })
+    @ExceptionHandler({ Exception.class })
     protected ResponseEntity handleServerException(Exception ex) {
-        return new ResponseEntity(new ExceptionDto(ErrorCode.INTERNAL_SERVER_ERROR.getErrorCode(), ErrorCode.INTERNAL_SERVER_ERROR.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(
+                new ExceptionDto(
+                        ErrorCode.INTERNAL_SERVER_ERROR.getErrorCode(),
+                        ErrorCode.INTERNAL_SERVER_ERROR.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
     }
 
 }
