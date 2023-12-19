@@ -156,26 +156,32 @@ public class SnowmanController {
 
     @GetMapping("/view-snowman/category")
     // 카테고리별 눈사람 조회 API
-    public SnowmanAllDto.Data viewCategory(
+    public SnowmanAllDto.Response viewCategory(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestParam("category_id") Long categoryId) {
 
         // 요청된 눈사람 id 가져오기
         List<Snowman> snowmanList = snowmanService.getSnowmanByFitCategory(categoryId);
 
-        return new SnowmanAllDto.Data(snowmanList);
+        return new SnowmanAllDto.Response(
+                new SnowmanAllDto.Data(snowmanList),
+                200,
+                "Success");
     }
 
     @GetMapping("/view-snowman/fit")
     // 어울리는 눈사람 조회 API
-    public SnowmanAllDto.Data viewFit(
+    public SnowmanAllDto.Response viewFit(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestParam("category_id") Long categoryId) {
 
         // 요청된 눈사람 id 가져오기
         List<Snowman> snowmanList = snowmanService.getSnowmanByFitCategory(categoryId);
 
-        return new SnowmanAllDto.Data(snowmanList);
+        return new SnowmanAllDto.Response(
+                new SnowmanAllDto.Data(snowmanList),
+                200,
+                "Success");
     }
 
 
