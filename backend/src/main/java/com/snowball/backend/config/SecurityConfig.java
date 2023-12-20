@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .dispatcherTypeMatchers(HttpMethod.valueOf("/login/**")).permitAll()
                 .dispatcherTypeMatchers(HttpMethod.valueOf("/api/v1/**")).permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .oauth2Login()
                 .userInfoEndpoint()

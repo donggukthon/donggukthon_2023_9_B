@@ -3,14 +3,16 @@ package com.snowball.backend.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({ CustomException.class })
-    protected ResponseEntity handleCustomException(CustomException ex) {
-        return new ResponseEntity(
+    @ResponseBody
+    protected ResponseEntity<ExceptionDto> handleCustomException(CustomException ex) {
+        return new ResponseEntity<>(
                 new ExceptionDto(
                         ex.getError().getErrorCode(),
                         ex.getError().getMessage()
@@ -20,6 +22,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({ Exception.class })
+    @ResponseBody
     protected ResponseEntity handleServerException(Exception ex) {
         return new ResponseEntity(
                 new ExceptionDto(
