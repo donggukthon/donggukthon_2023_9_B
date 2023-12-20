@@ -6,7 +6,6 @@ import com.snowball.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -27,7 +26,7 @@ public class SecurityConfig {
                 .cors().configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowCredentials(true);
-                    config.setAllowedOrigins(List.of("http://localhost:3000", "https://noonsachin.com:3000"));
+                    config.setAllowedOrigins(List.of("*"));
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setExposedHeaders(List.of("*"));
@@ -35,11 +34,9 @@ public class SecurityConfig {
                 })
                 .and()
                 .csrf().disable()
-                .authorizeRequests()
-                .dispatcherTypeMatchers(HttpMethod.valueOf("/login/**")).permitAll()
-                .dispatcherTypeMatchers(HttpMethod.valueOf("/api/v1/**")).permitAll()
-                .anyRequest().authenticated()
-                .and()
+                .authorizeHttpRequests(registry -> {
+                    registry.anyRequest().permitAll();
+                })
                 .oauth2Login()
                 .userInfoEndpoint()
                 .userService(userService)
