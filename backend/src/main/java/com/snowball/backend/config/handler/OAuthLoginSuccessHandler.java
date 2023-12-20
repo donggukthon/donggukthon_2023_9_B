@@ -22,7 +22,7 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class OAuthLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    private static final String REDIRECT_URI = "https://noonsachin.com:3000/login?jwt=%s&has_snowman=%s&is_plus=%s";
+    private static final String REDIRECT_URI = "https://www.noonsachin.com/login?jwt=%s&has_snowman=%s&is_plus=%s";
     private static final long TOKEN_EXPIRATION_TIME = 3600000; // 1시간 동안 유효한 토큰
 
     private final JwtProvider jwtProvider;
