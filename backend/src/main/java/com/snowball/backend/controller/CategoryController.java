@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/test-result")
+@RequestMapping("api/v1")
 public class CategoryController {
     private final CategoryService categoryService;
     private final TestResultUtil testResultUtil;
 
-    @GetMapping
+    @GetMapping("/test-result")
     // 테스트 결과를 통해 카테고리 id를 반환하는 API
     public CategoryDto.Response getTestResult(
             @RequestParam(name = "result") String testResult) {
