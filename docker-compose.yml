@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  snowball_frontend:
+    restart: always
+    command: npm start
+    container_name: snowball_frontend
+    image: hsh111366/snowball_frontend:1.0
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    stdin_open: true
+
+  snowball_backend:
+    image: hsh111366/snowball_backend:1.0
+    container_name: snowball_backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://snowball_db:3306/snowball_db?useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: snowball_user
+      SPRING_DATASOURCE_PASSWORD: snowball_pwd
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    depends_on:
+      - snowball_db
+
+  snowball_db:
+    image: mysql:8.2.0
+    container_name: snowball_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: snowball_db
+      MYSQL_USER: snowball_user
+      MYSQL_PASSWORD: snowball_pwd
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+    volumes:
+      - snowball_db_data:/var/lib/mysql
+
+networks:
+  app-network:
+
+volumes:
+  snowball_db_data:

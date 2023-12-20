@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .cors().configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowCredentials(true);
-                    config.setAllowedOrigins(List.of("http://localhost:3000"));
+                    config.setAllowedOrigins(List.of("http://localhost:3000", "https://noonsachin.com:3000"));
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setExposedHeaders(List.of("*"));
@@ -37,7 +37,6 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .dispatcherTypeMatchers(HttpMethod.valueOf("/login/**")).permitAll()
-                .dispatcherTypeMatchers(HttpMethod.valueOf("/test-result/**")).permitAll()
                 .dispatcherTypeMatchers(HttpMethod.valueOf("/api/v1/**")).permitAll()
                 .anyRequest().authenticated()
                 .and()
