@@ -5,6 +5,7 @@ import com.snowball.backend.entity.Category;
 import com.snowball.backend.service.CategoryService;
 import com.snowball.backend.util.TestResultUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,12 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/test-result")
+@Slf4j
+@RequestMapping("/api/v1")
 public class CategoryController {
     private final CategoryService categoryService;
     private final TestResultUtil testResultUtil;
 
-    @GetMapping
+    @GetMapping("/test-result")
     // 테스트 결과를 통해 카테고리 id를 반환하는 API
     public CategoryDto.Response getTestResult(
             @RequestParam(name = "result") String testResult) {
